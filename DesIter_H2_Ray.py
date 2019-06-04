@@ -8,27 +8,44 @@ Created on Thu May 16 14:50:41 2019
 import numpy as np
 import matplotlib.pyplot as plt
 from readPars import load_input
-#
-MTOWi=2534.1888909196387
-#pars=[350., 0.0055, 2., 2., 5.0, 1000., 250.]
+
+#MTOWi=3353.9570706384593
+#pars=[4., 2., 5.0, 1300., 250.]
 
 missiondat=load_input(sheet='Mission')
 acdat=load_input(sheet='Aircraft parameters')
 energdat=load_input(sheet='Energy storage')
 miscdat=load_input(sheet='Misc')
 
-def IterNew(MTOWi, pars, missiondat=missiondat, acdat=acdat, energdat=energdat, miscdat=miscdat):
+def IterNew(MTOWi=acdat.MTOW, pars=None, missiondat=missiondat, acdat=acdat, energdat=energdat, miscdat=miscdat, retrn=None, mode='read'):
+    '''
+       retrn - Variabl name as a string that you want to output in read mode
+       mode - 'read' or 'optimize' - optimize only used if new parameters have to be re-iterated with new design changes
+    '''
     showdiag=False
     #========================================================================================
     #Known parameter values (Class I)
     #========================================================================================
     Espec=energdat.Espec
     WmotPmax=miscdat.WmotPmax
-    Nprops=pars[0]
-    Nblades=pars[1]
-    A=pars[2]    
-    DL=pars[3]
-    Vcruise=pars[4]/3.6
+    if mode=='read':
+       Nprops=acdat.Nprops
+       Nblades=acdat.Nblades
+       A=acdat.A
+       DL=acdat.DL
+       Vcruise=missiondat.Vcruise
+       MTOWi=acdat.MTOW
+    elif mode=='optimize':
+        retrn=None
+        if pars==None:
+            raise Exception('Optimization parameters not specified')
+        Nprops=pars[0]
+        Nblades=pars[1]
+        A=pars[2]    
+        DL=pars[3]
+        Vcruise=pars[4]/3.6
+    else:
+        raise Exception('Please specify the usage of the function in mode input parameter')
     
     rhoSL=missiondat.rhoSL #Density at sea level
     rhoTrans=missiondat.rhoTrans #Density at transition altitude of hT=500m
@@ -51,14 +68,14 @@ def IterNew(MTOWi, pars, missiondat=missiondat, acdat=acdat, energdat=energdat, 
     CLROC=np.sqrt(3*CD0*1/k)
     CDROC=4*CD0
     
-    M=acdat.M #Change for Ray design to 0.7
+    M=acdat.M 
     TWto=acdat.TWto
     TWland=acdat.TWland
     Ti=acdat.Ti
     #========================================================================================
     #Requirement value generation
     #========================================================================================
-    WSgen=np.arange(0, 3000)
+    WSgen=np.arange(1, 3000)
     WSstall=0.5*rhoTrans*(Vstall**2)*CLmax
     PWcruise=(1/(Pset*mup))*(((CD0*0.5*rhoCruise*Vcruise**3)/(WSgen))+((WSgen)/(0.5*rhoCruise*Vcruise/k)))
     PWroc=(1/mup)*(ROCff+((np.sqrt(WSgen*(2/rhoCruise)))/((CLROC**1.5)/CDROC)))
@@ -126,7 +143,7 @@ def IterNew(MTOWi, pars, missiondat=missiondat, acdat=acdat, energdat=energdat, 
     b=np.sqrt(A*S)
     ROCh=ROCfactor*ROCff
     Wmax=WSstall*Smax/9.81
-    vh=np.sqrt(DL/(2*rhoSL))
+    vh=np.sqrt(DL/(2*rhoTrans))
     #
     Pto=((0.5*ROCvtol/vh)+np.sqrt(0.25*((ROCvtol/vh)**2)+1))*Phover
     Pclimb=(1/mup)*(ROCh+((np.sqrt(WSstall*(2./rhoCruise)))/((CLROC**1.5)/CDROC)))*MTOWi*9.81
@@ -156,7 +173,7 @@ def IterNew(MTOWi, pars, missiondat=missiondat, acdat=acdat, energdat=energdat, 
     Mprop_hor=Kmaterial*Kprop*N_prop_hor*(Nblades**0.391)*(Dprop_hor*P_mot_hor/(1000))**0.782
     Mpropulsion_hor=1.1*(N_mot_hor*(WmotPmax*(P_mot_hor/(9.81))+MESC_hor)+Mprop_hor)
     
-    Sprop=MTOWi/(DL*Nprops)
+    Sprop=(MTOWi*9.81)/(DL*Nprops)
     Dprop=np.sqrt(4*Sprop/np.pi)
     Mprop=Kmaterial*Kprop*Nprops*(Nblades**(0.391))*(Dprop*Pto/(1000*Nprops))**0.782
     Mpropulsion=1.1*(Nprops*(WmotPmax*(Pto/(9.81*Nprops))+MESC)+Mprop)
@@ -180,5 +197,7 @@ def IterNew(MTOWi, pars, missiondat=missiondat, acdat=acdat, energdat=energdat, 
     MTOWnew=(Mpropulsion+Mpropulsion_hor+Mpl+Msubsys+Mavion)/(1-MFsys-MFstruct)
         
     
-
-    return MTOWnew, Wmax, S, A, b, Propspace, Dprop, WmotPmax, ROCvtol, DL, Vcruise, Pcruise/Pto
+    if retrn==None:
+        return MTOWnew, Wmax, S, A, b, Propspace, Dprop, WmotPmax, ROCvtol, DL, Vcruise, Pcruise/Pto
+    else:
+        return locals()[retrn]
