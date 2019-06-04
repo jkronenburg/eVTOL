@@ -30,9 +30,9 @@ for Nprops in Npropsrange:
                     print(pars)
                     for i in iters:
                         if i==1:
-                            ans=IterNew(MTOWi, pars)
+                            ans=IterNew(MTOWi=MTOWi, pars=pars, mode='optimize')
                         else:
-                            ans=IterNew(ans[0], pars)
+                            ans=IterNew(MTOWi=ans[0], pars=pars, mode='optimize')
                         if ans[0]>ans[1]:
                             break
                     if ans[0]<wmin and ans[0]<=ans[1] and ans[0]>0 and ans[5]>0.04:
