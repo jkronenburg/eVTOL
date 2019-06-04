@@ -9,7 +9,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from readPars import load_input
 #
-#MTOWi=3075.38608699
+MTOWi=2534.1888909196387
 #pars=[350., 0.0055, 2., 2., 5.0, 1000., 250.]
 
 missiondat=load_input(sheet='Mission')

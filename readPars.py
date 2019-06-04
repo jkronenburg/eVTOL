@@ -29,7 +29,7 @@ def load_input(Vars=True, sheet=None, namespacename='inp',name=None, info=None):
         else:
             return data
         
-def plot_graph(x, y, xlabel=None, ylabel=None, newfig=True, label=None, styleset='darkgrid'):
+def plot_graph(x, y, xlabel=None, ylabel=None, newfig=True, label=None, styleset='whitegrid'):
     sns.set(context='paper', font_scale=1.5, style=styleset)
     if type(x)==list or type(x)==np.matrixlib.defmatrix.matrix:
         x=np.array(x)

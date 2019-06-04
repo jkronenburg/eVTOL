@@ -10,7 +10,7 @@ import numpy as np
 from DesIter_H2_Ray import IterNew
 
 
-Npropsrange=np.array([2.])#np.arange(2, 6, 2)
+Npropsrange=np.array([4.])#np.arange(2, 6, 2)
 Nbladesrange=np.arange(2, 6, 1)
 Arange=np.arange(1, 5.5, 0.5)
 DLrange=np.arange(1000, 2100, 100)
