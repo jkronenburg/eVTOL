@@ -33,7 +33,7 @@ acceptable_noys = [[50, 114],[63, 113],[80, 111],[100, 109],[125, 108],
                    [1600,96],[2000,94],[2500,92],[3150,91],[4000,91],
                    [5000,92],[6300,93],[8000,96],[10000,99]]                    #[freq, SPL]
 
-#print('freq and SPL value ',acceptable_noys[0][0],acceptable_noys[0][1])        #only change first [0]
+#print('freq and SPL value ',acceptable_noys[0][0],acceptable_noys[0][1])       #only change first [0]
 
 N_blades = np.arange(2,6,1)                                                     #constraint on number of blades. Min = 2, Max = 5
 parameter = []                                                                  #To append in for loop next lines, [RPM,N_blades]
@@ -41,6 +41,10 @@ M_tmax = 0.8                                                                    
 sos = 343                                                                       #Speed of sound at sea level in m/s
 N_prop = np.arange(1,11,1)                                                      #range of number of possible propellers
 r = 50                                                                          #Distance from sound source to sound receiver
+MTOW = 3353*9.81                                                                #MTOW from the previous midterm report in N
+FOM = 0.7                                                                       #Figure of Merit from the helicopter lady
+rho = 1.225                                                                     #At sea level
+
 
 for i in range(len(N_blades)):
     for l in range(len(acceptable_noys)):
@@ -49,14 +53,17 @@ for i in range(len(N_blades)):
         if b < 7.5 and b > 0.5:                                                 # Define range of propeller diameter between 0.5 and 7.5m
             for m in range(len(N_prop)):
                 c = 10**(1/15.3*(acceptable_noys[l][1]-83.4+20*log(b)-38.5*M_tmax+3*(N_blades[i]-2)-10*log(N_prop[m])+20*log(r)))    #Formula for SPL rewritten to get P_motor       
-                
-                parameter.append([a,N_blades[i],acceptable_noys[l][1],b,c])           #Appended in 'parameter' is [RPM,N_blades, SPL value, N_diameter] related to eachother
-      
-
-
-
-              
-print(parameter)   
+# =============================================================================
+#       (continue here tomorrow)          
+# =============================================================================
+                DL = MTOW/(pi*b**2/4)/N_prop[m]                                 #Disk loading formula in N/m^2
+                P_req = sqrt((MTOW/1.26)**3/(2*rho*DL))/FOM/1000                #Power required for hover from the drone report, divided by 1.26 is relationship for ducted propellers,
+                if DL < 5000:    
+                    if P_req < c:      
+                        parameter.append([a,N_blades[i],acceptable_noys[l][1],b,c,DL,P_req])     #Appended in 'parameter' is [RPM,N_blades, SPL value, N_diameter, P_mot, Disk Loading, P_req] related to eachother
+                  
+print(parameter)             
+print(len(parameter))   
     
     
 
