@@ -65,54 +65,224 @@ for i in range(len(N_blades)):
                     if DL > 100 and DL < 1000:                                   #Assumed disk loading between 100 and 1000 N/m^2 due to lower disk loading is more efficient for hover
                         if P_to < P_mot: 
                             if N_prop[m] > 1 and N_prop[m] < 3:
-                                N_prop2.append(['#Propellers =',N_prop[m],'RPM =',RPM,'#Blades =',N_blades[i],'SPl =',acceptable_noys[l][1],'Diameter Prop =',D_prop,'P_mot =',P_mot,'DL =',DL,'P_to =',P_to])
+                                N_prop2.append([N_prop[m],RPM,N_blades[i],acceptable_noys[l][1],round(D_prop,2),round(P_mot,2),round(DL,2),round(P_to,2)])
                             if N_prop[m] > 2 and N_prop[m] < 4:
-                                N_prop3.append(['#Propellers =',N_prop[m],'RPM =',RPM,'#Blades =',N_blades[i],'SPl =',acceptable_noys[l][1],'Diameter Prop =',D_prop,'P_mot =',P_mot,'DL =',DL,'P_to =',P_to])
+                                N_prop3.append([N_prop[m],RPM,N_blades[i],acceptable_noys[l][1],round(D_prop,2),round(P_mot,2),round(DL,2),round(P_to,2)])
                             if N_prop[m] > 3 and N_prop[m] < 5:
-                                N_prop4.append(['#Propellers =',N_prop[m],'RPM =',RPM,'#Blades =',N_blades[i],'SPl =',acceptable_noys[l][1],'Diameter Prop =',D_prop,'P_mot =',P_mot,'DL =',DL,'P_to =',P_to])
+                                N_prop4.append([N_prop[m],RPM,N_blades[i],acceptable_noys[l][1],round(D_prop,2),round(P_mot,2),round(DL,2),round(P_to,2)])
                             if N_prop[m] > 4 and N_prop[m] < 6:
-                                N_prop5.append(['#Propellers =',N_prop[m],'RPM =',RPM,'#Blades =',N_blades[i],'SPl =',acceptable_noys[l][1],'Diameter Prop =',D_prop,'P_mot =',P_mot,'DL =',DL,'P_to =',P_to])
+                                N_prop5.append([N_prop[m],RPM,N_blades[i],acceptable_noys[l][1],round(D_prop,2),round(P_mot,2),round(DL,2),round(P_to,2)])
                             if N_prop[m] > 5 and N_prop[m] < 7:
-                                N_prop6.append(['#Propellers =',N_prop[m],'RPM =',RPM,'#Blades =',N_blades[i],'SPl =',acceptable_noys[l][1],'Diameter Prop =',D_prop,'P_mot =',P_mot,'DL =',DL,'P_to =',P_to])
+                                N_prop6.append([N_prop[m],RPM,N_blades[i],acceptable_noys[l][1],round(D_prop,2),round(P_mot,2),round(DL,2),round(P_to,2)])
                             if N_prop[m] > 6 and N_prop[m] < 8:
-                                N_prop7.append(['#Propellers =',N_prop[m],'RPM =',RPM,'#Blades =',N_blades[i],'SPl =',acceptable_noys[l][1],'Diameter Prop =',D_prop,'P_mot =',P_mot,'DL =',DL,'P_to =',P_to])
+                                N_prop7.append([N_prop[m],RPM,N_blades[i],acceptable_noys[l][1],round(D_prop,2),round(P_mot,2),round(DL,2),round(P_to,2)])
                             if N_prop[m] > 7 and N_prop[m] < 9:
-                                N_prop8.append(['#Propellers =',N_prop[m],'RPM =',RPM,'#Blades =',N_blades[i],'SPl =',acceptable_noys[l][1],'Diameter Prop =',D_prop,'P_mot =',P_mot,'DL =',DL,'P_to =',P_to])
-    
-                            parameter.append(['RPM',RPM,'#Blades',N_blades[i],'#Propellers',N_prop[m],'SPl',acceptable_noys[l][1],'Diameter Prop',D_prop,'P_mot',P_mot,'DL',DL,'P_to',P_to])     #Appended in 'parameter' is [RPM,N_blades, SPL value, N_diameter, P_mot, Disk Loading, P_req, N_propellers] related to eachother
-                            #print(P_mot)
+                                N_prop8.append([N_prop[m],RPM,N_blades[i],acceptable_noys[l][1],round(D_prop,2),round(P_mot,2),round(DL,2),round(P_to,2)])
+                            parameter.append(['RPM',RPM,'#Blades',N_blades[i],'#Propellers',N_prop[m],'SPl',acceptable_noys[l][1],'Diameter Prop',round(D_prop,2),'P_mot',round(P_mot,2),'DL',round(DL,2),'P_to',round(P_to,2)])     #Appended in 'parameter' is [RPM,N_blades, SPL value, N_diameter, P_mot, Disk Loading, P_req, N_propellers] related to eachother
+              
+# =============================================================================
+# RPMs            = []
+# blade_amount    = [] 
+# Diameters       = [] 
+# SPLs            = []
+# P_motors        = []
+# DLs             = []
+# P_takeoffs      = []
+# 
+# for i in range(len(N_prop2)):
+#     RPMs.append(N_prop2[i][1])
+#     blade_amount.append(N_prop2[i][2])
+#     SPLs.append(N_prop2[i][3])
+#     Diameters.append(N_prop2[i][4])
+#     P_motors.append(N_prop2[i][5])
+#     DLs.append(N_prop2[i][6])
+#     P_takeoffs.append(N_prop2[i][7])
+# 
+# print('2 propellers \n'
+#       'Max RPM - Min RPM ','(',max(RPMs),' - ',min(RPMs),') \n' 
+#       'Max blades - Min blades ','(',max(blade_amount),' - ',min(blade_amount),') \n'
+#       'Max SPL - Min SPL ','(',max(SPLs),' - ',min(SPLs),') \n'
+#       'Max diameter - Min diameters ','(',max(Diameters),' - ',min(Diameters),') \n'
+#       'Max P_motors - Min P_motors ','(',max(P_motors),' - ',min(P_motors),') \n'
+#       'Max disk loading - Min disk loading ','(',max(DLs),' - ',min(DLs),') \n'
+#       'Max P_takeoff - Min P_takeoff ','(',max(P_takeoffs),' - ',min(P_takeoffs),') \n')                
+# =============================================================================
+RPMs            = []
+blade_amount    = [] 
+Diameters       = [] 
+SPLs            = []
+P_motors        = []
+DLs             = []
+P_takeoffs      = []
+           
+for i in range(len(N_prop3)):
+    RPMs.append(N_prop3[i][1])
+    blade_amount.append(N_prop3[i][2])
+    SPLs.append(N_prop3[i][3])
+    Diameters.append(N_prop3[i][4])
+    P_motors.append(N_prop3[i][5])
+    DLs.append(N_prop3[i][6])
+    P_takeoffs.append(N_prop3[i][7])
+
+print('3 propellers \n'
+      'Max RPM - Min RPM ','(',max(RPMs),' - ',min(RPMs),') \n' 
+      'Max blades - Min blades ','(',max(blade_amount),' - ',min(blade_amount),') \n'
+      'Max SPL - Min SPL ','(',max(SPLs),' - ',min(SPLs),') \n'
+      'Max diameter - Min diameters ','(',max(Diameters),' - ',min(Diameters),') \n'
+      'Max P_motors - Min P_motors ','(',max(P_motors),' - ',min(P_motors),') \n'
+      'Max disk loading - Min disk loading ','(',max(DLs),' - ',min(DLs),') \n'
+      'Max P_takeoff - Min P_takeoff ','(',max(P_takeoffs),' - ',min(P_takeoffs),') \n')
+
+RPMs            = []
+blade_amount    = [] 
+Diameters       = [] 
+SPLs            = []
+P_motors        = []
+DLs             = []
+P_takeoffs      = []
+
+for i in range(len(N_prop4)):
+    RPMs.append(N_prop4[i][1])
+    blade_amount.append(N_prop4[i][2])
+    SPLs.append(N_prop4[i][3])
+    Diameters.append(N_prop4[i][4])
+    P_motors.append(N_prop4[i][5])
+    DLs.append(N_prop4[i][6])
+    P_takeoffs.append(N_prop4[i][7])
+
+print('4 propellers \n'
+      'Max RPM - Min RPM ','(',max(RPMs),' - ',min(RPMs),') \n' 
+      'Max blades - Min blades ','(',max(blade_amount),' - ',min(blade_amount),') \n'
+      'Max SPL - Min SPL ','(',max(SPLs),' - ',min(SPLs),') \n'
+      'Max diameter - Min diameters ','(',max(Diameters),' - ',min(Diameters),') \n'
+      'Max P_motors - Min P_motors ','(',max(P_motors),' - ',min(P_motors),') \n'
+      'Max disk loading - Min disk loading ','(',max(DLs),' - ',min(DLs),') \n'
+      'Max P_takeoff - Min P_takeoff ','(',max(P_takeoffs),' - ',min(P_takeoffs),') \n')
+
+RPMs            = []
+blade_amount    = [] 
+Diameters       = [] 
+SPLs            = []
+P_motors        = []
+DLs             = []
+P_takeoffs      = []
+
+for i in range(len(N_prop5)):
+    RPMs.append(N_prop5[i][1])
+    blade_amount.append(N_prop5[i][2])
+    SPLs.append(N_prop5[i][3])
+    Diameters.append(N_prop5[i][4])
+    P_motors.append(N_prop5[i][5])
+    DLs.append(N_prop5[i][6])
+    P_takeoffs.append(N_prop5[i][7])
+
+print('5 propellers \n'
+      'Max RPM - Min RPM ','(',max(RPMs),' - ',min(RPMs),') \n' 
+      'Max blades - Min blades ','(',max(blade_amount),' - ',min(blade_amount),') \n'
+      'Max SPL - Min SPL ','(',max(SPLs),' - ',min(SPLs),') \n'
+      'Max diameter - Min diameters ','(',max(Diameters),' - ',min(Diameters),') \n'
+      'Max P_motors - Min P_motors ','(',max(P_motors),' - ',min(P_motors),') \n'
+      'Max disk loading - Min disk loading ','(',max(DLs),' - ',min(DLs),') \n'
+      'Max P_takeoff - Min P_takeoff ','(',max(P_takeoffs),' - ',min(P_takeoffs),') \n')
+
+RPMs            = []
+blade_amount    = [] 
+Diameters       = [] 
+SPLs            = []
+P_motors        = []
+DLs             = []
+P_takeoffs      = []
+
+for i in range(len(N_prop6)):
+    RPMs.append(N_prop6[i][1])
+    blade_amount.append(N_prop6[i][2])
+    SPLs.append(N_prop6[i][3])
+    Diameters.append(N_prop6[i][4])
+    P_motors.append(N_prop6[i][5])
+    DLs.append(N_prop6[i][6])
+    P_takeoffs.append(N_prop6[i][7])
+
+print('6 propellers \n'
+      'Max RPM - Min RPM ','(',max(RPMs),' - ',min(RPMs),') \n' 
+      'Max blades - Min blades ','(',max(blade_amount),' - ',min(blade_amount),') \n'
+      'Max SPL - Min SPL ','(',max(SPLs),' - ',min(SPLs),') \n'
+      'Max diameter - Min diameters ','(',max(Diameters),' - ',min(Diameters),') \n'
+      'Max P_motors - Min P_motors ','(',max(P_motors),' - ',min(P_motors),') \n'
+      'Max disk loading - Min disk loading ','(',max(DLs),' - ',min(DLs),') \n'
+      'Max P_takeoff - Min P_takeoff ','(',max(P_takeoffs),' - ',min(P_takeoffs),') \n')
+
+RPMs            = []
+blade_amount    = [] 
+Diameters       = [] 
+SPLs            = []
+P_motors        = []
+DLs             = []
+P_takeoffs      = []
+
+for i in range(len(N_prop7)):
+    RPMs.append(N_prop7[i][1])
+    blade_amount.append(N_prop7[i][2])
+    SPLs.append(N_prop7[i][3])
+    Diameters.append(N_prop7[i][4])
+    P_motors.append(N_prop7[i][5])
+    DLs.append(N_prop7[i][6])
+    P_takeoffs.append(N_prop7[i][7])
+
+print('7 propellers \n'
+      'Max RPM - Min RPM ','(',max(RPMs),' - ',min(RPMs),') \n' 
+      'Max blades - Min blades ','(',max(blade_amount),' - ',min(blade_amount),') \n'
+      'Max SPL - Min SPL ','(',max(SPLs),' - ',min(SPLs),') \n'
+      'Max diameter - Min diameters ','(',max(Diameters),' - ',min(Diameters),') \n'
+      'Max P_motors - Min P_motors ','(',max(P_motors),' - ',min(P_motors),') \n'
+      'Max disk loading - Min disk loading ','(',max(DLs),' - ',min(DLs),') \n'
+      'Max P_takeoff - Min P_takeoff ','(',max(P_takeoffs),' - ',min(P_takeoffs),') \n')
+
+RPMs            = []
+blade_amount    = [] 
+Diameters       = [] 
+SPLs            = []
+P_motors        = []
+DLs             = []
+P_takeoffs      = []
+
+for i in range(len(N_prop8)):
+    RPMs.append(N_prop8[i][1])
+    blade_amount.append(N_prop8[i][2])
+    SPLs.append(N_prop8[i][3])
+    Diameters.append(N_prop8[i][4])
+    P_motors.append(N_prop8[i][5])
+    DLs.append(N_prop8[i][6])
+    P_takeoffs.append(N_prop8[i][7])
+
+print('8 propellers \n'
+      'Max RPM - Min RPM ','(',max(RPMs),' - ',min(RPMs),') \n' 
+      'Max blades - Min blades ','(',max(blade_amount),' - ',min(blade_amount),') \n'
+      'Max SPL - Min SPL ','(',max(SPLs),' - ',min(SPLs),') \n'
+      'Max diameter - Min diameters ','(',max(Diameters),' - ',min(Diameters),') \n'
+      'Max P_motors - Min P_motors ','(',max(P_motors),' - ',min(P_motors),') \n'
+      'Max disk loading - Min disk loading ','(',max(DLs),' - ',min(DLs),') \n'
+      'Max P_takeoff - Min P_takeoff ','(',max(P_takeoffs),' - ',min(P_takeoffs),') \n')
 
 #print(N_prop2)
 #print(parameter)             
-print('total possible combinations: ',len(parameter))
-print('total possible combinations with 2 propellers: ',len(N_prop2))
-print('total possible combinations with 3 propellers: ',len(N_prop3))
-print('total possible combinations with 4 propellers: ',len(N_prop4))
-print('total possible combinations with 5 propellers: ',len(N_prop5))
-print('total possible combinations with 6 propellers: ',len(N_prop6))
-print('total possible combinations with 7 propellers: ',len(N_prop7))
-print('total possible combinations with 8 propellers: ',len(N_prop8))
-
-#print(N_prop3)   
-
-
-
-
-
-
-
-
 # =============================================================================
-# df1 = pd.DataFrame([['a', 'b'], ['c', 'd']],
-#                    index=['row 1', 'row 2'],
-#                    columns=['col 1', 'col 2'])
-# df1.to_excel("Pandas.xlsx")  # doctest: +SKIP
+# print('total possible combinations: ',len(parameter))
+# print('total possible combinations with 2 propellers: ',len(N_prop2))
+# print('total possible combinations with 3 propellers: ',len(N_prop3))
+# print('total possible combinations with 4 propellers: ',len(N_prop4))
+# print('total possible combinations with 5 propellers: ',len(N_prop5))
+# print('total possible combinations with 6 propellers: ',len(N_prop6))
+# print('total possible combinations with 7 propellers: ',len(N_prop7))
+# print('total possible combinations with 8 propellers: ',len(N_prop8))
 # =============================================================================
-    
 
-    
-    
-    
+  
+
+
+
+
+
+
 
 
 
