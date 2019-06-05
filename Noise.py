@@ -48,23 +48,22 @@ rho = 1.225                                                                     
 
 for i in range(len(N_blades)):
     for l in range(len(acceptable_noys)):
-        a = (acceptable_noys[l][0]*60)/N_blades[i]                              #a = RPMs
-        b = (M_tmax*60*sos)/(pi*a)                                              #b = diameter propeller
-        if b < 7.5 and b > 0.5:                                                 # Define range of propeller diameter between 0.5 and 7.5m
+        RPM = (acceptable_noys[l][0]*60)/N_blades[i]                              #RPMs
+        D_prop = (M_tmax*60*sos)/(pi*RPM)                                              #b = diameter propeller
+        if D_prop < 7.5 and D_prop > 0.5:                                                 # Define range of propeller diameter between 0.5 and 7.5m
             for m in range(len(N_prop)):
-                c = 10**(1/15.3*(acceptable_noys[l][1]-83.4+20*log(b)-38.5*M_tmax+3*(N_blades[i]-2)-10*log(N_prop[m])+20*log(r)))    #Formula for SPL rewritten to get P_motor       
-# =============================================================================
-#       (continue here tomorrow)          
-# =============================================================================
-                DL = MTOW/(pi*b**2/4)/N_prop[m]                                 #Disk loading formula in N/m^2
-                P_req = sqrt((MTOW/1.26)**3/(2*rho*DL))/FOM/1000                #Power required for hover from the drone report, divided by 1.26 is relationship for ducted propellers,
+                P_mot = e**(1/15.3*(acceptable_noys[l][1]-83.4+20*log(D_prop)-38.5*M_tmax+3*(N_blades[i]-2)-10*log(N_prop[m])+20*log(r)))    #Formula for SPL rewritten to get P_motor       
+                
+                DL = MTOW/(pi*D_prop**2/4)/N_prop[m]                                 #Disk loading formula in N/m^2
+                P_req = sqrt((MTOW/1.26)**3/(2*rho*DL))/FOM/1000                     #Power required for hover from the drone report, divided by 1.26 is relationship for ducted propellers,
                 if DL < 5000:    
-                    if P_req < c:      
-                        parameter.append([a,N_blades[i],acceptable_noys[l][1],b,c,DL,P_req])     #Appended in 'parameter' is [RPM,N_blades, SPL value, N_diameter, P_mot, Disk Loading, P_req] related to eachother
-                  
-print(parameter)             
+                    if P_req < P_mot:      
+                        parameter.append([RPM,N_blades[i],acceptable_noys[l][1],D_prop,P_mot,DL,P_req,N_prop[m]])     #Appended in 'parameter' is [RPM,N_blades, SPL value, N_diameter, P_mot, Disk Loading, P_req, N_propellers] related to eachother
+                        #print(P_mot)
+print(parameter[4])             
 print(len(parameter))   
     
+
     
 
     
