@@ -54,6 +54,7 @@ def IterNew(MTOWi=acdat.MTOW, pars=None, missiondat=missiondat, acdat=acdat, ene
     #========================================================================================
     #Assumed parameter values (Class I)
     #========================================================================================
+    PLfactor=missiondat.PLfactor
     
     CLmax=acdat.CLmax
     CD0=acdat.CD0
@@ -147,7 +148,7 @@ def IterNew(MTOWi=acdat.MTOW, pars=None, missiondat=missiondat, acdat=acdat, ene
     #
     Pto=((0.5*ROCvtol/vh)+np.sqrt(0.25*((ROCvtol/vh)**2)+1))*Phover
     Pclimb=(1/mup)*(ROCh+((np.sqrt(WSstall*(2./rhoCruise)))/((CLROC**1.5)/CDROC)))*MTOWi*9.81
-    Pcruise=(1/(Pset*mup))*(((CD0*0.5*rhoCruise*Vcruise**3)/(WSstall))+((WSstall)/(0.5*rhoCruise*Vcruise/k)))*(MTOWi-0.25*Mpl)*9.81
+    Pcruise=(1/(Pset*mup))*(((CD0*0.5*rhoCruise*Vcruise**3)/(WSstall))+((WSstall)/(0.5*rhoCruise*Vcruise/k)))*(MTOWi-(1-PLfactor)*Mpl)*9.81
     Pdesc=(0.5*rhoCruise*(Vcruise**3)*(1./WSstall)*(CD0+k*WSstall/(0.5*rhoCruise*Vcruise**2)))*MTOWi*9.81 #Assumption - descent in forward flight is performed at cruise velocity
     if -ROCvtol/vh<=-2:
         Pland=((0.5*-ROCvtol/vh)-np.sqrt(0.25*((-ROCvtol/vh)**2)-1))*Phover
