@@ -46,7 +46,6 @@ def IterNew(MTOWi=acdat.MTOW, pars=None, missiondat=missiondat, acdat=acdat, ene
         Vcruise=pars[4]/3.6
     else:
         raise Exception('Please specify the usage of the function in mode input parameter')
-    
     rhoSL=missiondat.rhoSL #Density at sea level
     rhoTrans=missiondat.rhoTrans #Density at transition altitude of hT=500m
     rhoCruise=missiondat.rhoCruise #Density at cruise altitude of hC=3000ft
@@ -197,6 +196,8 @@ def IterNew(MTOWi=acdat.MTOW, pars=None, missiondat=missiondat, acdat=acdat, ene
     MFsys=(MFbatt+MFtank+MFH2)*mfact_comp
     MTOWnew=(Mpropulsion+Mpropulsion_hor+Mpl+Msubsys+Mavion)/(1-MFsys-MFstruct)
         
+    if retrn not in locals().keys() and retrn!=None:
+        raise Exception('The specified input varaible not found')
     
     if retrn==None:
         return MTOWnew, Wmax, S, A, b, Propspace, Dprop, WmotPmax, ROCvtol, DL, Vcruise, Pcruise/Pto
